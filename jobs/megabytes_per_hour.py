@@ -18,11 +18,12 @@ SORT_BY = "key"  # run_job.py prints hours in order (0, 1, 2, ...) rather than b
 
 def mapper(line):
     """Yield ``(hour, bytes)`` for every request that can be parsed."""
-    # TODO
-    raise NotImplementedError("Task 2: write the mapper")
+    request = parse_line(line)
+    if request is None:
+        return
+    yield request["hour"], request["bytes"]
 
 
 def reducer(key, values):
     """Return the total of ``values`` in megabytes, rounded to 1 decimal."""
-    # TODO
-    raise NotImplementedError("Task 2: write the reducer")
+    return round(sum(values) / 1_000_000, 1)
